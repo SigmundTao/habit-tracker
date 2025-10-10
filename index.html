@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <dialog id="add-new-habit-dialog">
+        <div id="add-new-habit-div">
+            <p id="habit-dialog-title">Create New Habit</p>
+            <button id="close-modal-btn">x</button>
+            <div id="div2">
+                <div id="habit-info-holder">
+                    <label for="new-habit-title">Habit:</label>
+                    <input type="text" id="new-habit-title"/>
+                    <label for="habit-duration" id="habit-duration-label">Habit Duration:</label>
+                    <input type="number" min="3" max="31" placeholder="30" id="habit-duration"/>
+                    <label for="habit-colours-holder" id="habit-colour-label">Colour:</label>
+                    <div id="habit-colours-holder"></div>
+                </div>
+                <div id="habit-icons-holder"></div>
+            </div> 
+            <button id="submit-habit-btn">Create Habit</button>           
+        </div>
+    </dialog>
+    <div id="habits-container"></div>
+    <button id="add-habit-btn">+</button>
+    <script src="script.js">
+
+    </script>
+</body>
+</html>
