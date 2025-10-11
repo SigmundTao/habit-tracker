@@ -105,11 +105,17 @@ const loadHabits = () => {
         trackerContainer.classList.add('tracker-container');
         div.appendChild(trackerContainer);
 
-        for(let i = 0; i < 30; i++){
+        for(let i = 0; i < habit.startDayOfWeek; i++){
+            const emptyCell = document.createElement('div');
+            emptyCell.classList.add('empty-day-cell');
+            trackerContainer.appendChild(emptyCell);
+        }
+
+        for(let i = 0; i < 31; i++){
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.classList.add('module-checkbox');
-            trackerContainer.appendChild(checkbox)
+            trackerContainer.appendChild(checkbox);
         }
 
         const habitIcon = document.createElement('div');
@@ -151,11 +157,20 @@ const createHabit = () => {
     }
     const colour = selectedColour.style.backgroundColor;
     const icon = selectedIcon.id + '.svg';
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const firstOfMonth = new Date(year, month, 1);
+    const dayOfWeek = firstOfMonth.getDay();
+    const startDayOfWeek = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
 
     const newHabit = {
         title,
         colour,
         icon,
+        startDayOfWeek,
+        createdMonth: month,
+        createdYear: year
     };
 
     habits.push(newHabit);
@@ -165,4 +180,3 @@ const createHabit = () => {
 
 submitHabitBtn.addEventListener('click', createHabit);
 
-/* Calculate the day a date falls on*/

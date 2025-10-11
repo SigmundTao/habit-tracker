@@ -92,3 +92,13 @@
     height: 30%;
     padding: 10px;
 }
+
+.tracker-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.empty-day-cell {
+    aspect-ratio: 1;
+}
