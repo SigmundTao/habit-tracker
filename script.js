@@ -1,3 +1,4 @@
+//New Habit Dialog
 const addHabitDialog = document.getElementById('add-new-habit-dialog');
 const addHabitBtn = document.getElementById('add-habit-btn');
 const closeHabitDialogBtn = document.getElementById('close-modal-btn');
@@ -6,7 +7,6 @@ const habitIconsHolder = document.getElementById('habit-icons-holder');
 const submitHabitBtn = document.getElementById('submit-habit-btn');
 const habitsContainer = document.getElementById('habits-container');
 
-const habits = [];
 const habitIcons = [
     'art-icon.svg','banana-icon.svg','bed-icon.svg',
     'beer-can-icon.svg','bible-icon.svg','bible-icon2.svg',
@@ -27,7 +27,7 @@ habitIcons.forEach(icon => {
     const div = document.createElement('div');
     div.id = icon.replace('.svg', '');
     div.classList.add('habit-icon');
-    div.style.width = '30%';
+    div.style.width = '15%';
     div.style.aspectRatio = '1';
     div.style.backgroundImage = `url('./svg-icons/${icon}')`;
     div.style.backgroundSize = 'contain';
@@ -72,31 +72,97 @@ habitColours.forEach(colour => {
     habitColoursHolder.appendChild(div)
 })
 
-let numberOfHabits = 0;
 
-const createNewHabit = () => {
-    const newHabit = `{
-        id:'',
-        title : ${document.getElementById('new-habit-title').value},
-        duration : ${document.getElementById('habit-duration').value},
-        color : ${document.querySelector('.selected-colour').id},
-        icon : ${document.querySelector('.selected-icon')},
-    }`;
-
-    habits.push(newHabit);
-}
 
 const openHabitDialog = () => {
     addHabitDialog.showModal();
 }
 
-const loadHabits = () => {
-    habits.forEach(habit => {
+const closeHabitDialog = () => {
+    addHabitDialog.close()
+}
 
+closeHabitDialogBtn.addEventListener('click', closeHabitDialog)
+addHabitBtn.addEventListener('click', openHabitDialog);
+
+// habit module creation
+const habits = []; 
+const habitModuleContainer = document.getElementById('habit-modules-container');
+
+const loadHabits = () => {
+    habitModuleContainer.innerHTML = ``;
+
+    habits.forEach(habit => {
+        const div = document.createElement('div');
+        div.classList.add('habit-module');
+        div.id = habit.title;
+
+        const habitModuleHeader = document.createElement('div');
+        habitModuleHeader.classList.add('habit-module-header');
+        div.appendChild(habitModuleHeader);
+
+        const trackerContainer = document.createElement('div');
+        trackerContainer.classList.add('tracker-container');
+        div.appendChild(trackerContainer);
+
+        for(let i = 0; i < 30; i++){
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.classList.add('module-checkbox');
+            trackerContainer.appendChild(checkbox)
+        }
+
+        const habitIcon = document.createElement('div');
+        habitIcon.classList.add('habit-module-icon');
+        habitIcon.style.backgroundImage = `url('./svg-icons/${habit.icon}')`
+        habitIcon.style.backgroundSize = 'contain';
+        habitIcon.backgroundRepeat = 'no-repeat';
+        habitIcon.style.backgroundPosition = 'center';
+        habitModuleHeader.appendChild(habitIcon);
+
+        const habitTitle =document.createElement('div');
+        habitTitle.classList.add('habit-module-title');
+        habitTitle.innerText = habit.title;
+        habitModuleHeader.appendChild(habitTitle);
+        
+        habitModuleContainer.appendChild(div);
     })
 }
 
-closeHabitDialogBtn.addEventListener('click', () => {
-    addHabitDialog.close();
-})
-addHabitBtn.addEventListener('click', openHabitDialog);
+const loadHabitBtn = document.getElementById('load-habits-btn');
+
+loadHabitBtn.addEventListener('click', loadHabits);
+
+const habitTitleInput = document.getElementById('new-habit-title');
+
+const createHabit = () => {
+    const title = habitTitleInput.value;
+    const selectedColour = document.querySelector('.selected-colour');
+    const selectedIcon = document.querySelector('.selected-icon');
+
+    if (!title || !selectedColour || !selectedIcon){
+        alert('Please enter a title, select an icon and select a colour');
+        return;
+    }
+
+    if(habits.length >= 3){
+        alert('You have ran out of free habits. Upgrade to premium for more.');
+        return;
+    }
+    const colour = selectedColour.style.backgroundColor;
+    const icon = selectedIcon.id + '.svg';
+
+    const newHabit = {
+        title,
+        colour,
+        icon,
+    };
+
+    habits.push(newHabit);
+    closeHabitDialog();
+    loadHabits();
+}
+
+submitHabitBtn.addEventListener('click', createHabit);
+
+/* Calculate the day a date falls on*/
