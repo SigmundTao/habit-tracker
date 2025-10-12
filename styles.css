@@ -102,3 +102,14 @@
 .empty-day-cell {
     aspect-ratio: 1;
 }
+
+.module-days-holder {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day-of-the-week {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

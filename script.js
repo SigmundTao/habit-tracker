@@ -7,6 +7,8 @@ const habitIconsHolder = document.getElementById('habit-icons-holder');
 const submitHabitBtn = document.getElementById('submit-habit-btn');
 const habitsContainer = document.getElementById('habits-container');
 
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun' ];
+
 const habitIcons = [
     'art-icon.svg','banana-icon.svg','bed-icon.svg',
     'beer-can-icon.svg','bible-icon.svg','bible-icon2.svg',
@@ -100,6 +102,16 @@ const loadHabits = () => {
         const habitModuleHeader = document.createElement('div');
         habitModuleHeader.classList.add('habit-module-header');
         div.appendChild(habitModuleHeader);
+
+        const daysOfTheWeekDiv = document.createElement('div');
+        daysOfTheWeekDiv.classList.add('module-days-holder');
+        days.forEach(day => {
+            const p = document.createElement('p');
+            p.classList.add('day-of-the-week');
+            p.innerText = day;
+            daysOfTheWeekDiv.appendChild(p);
+        });
+        div.appendChild(daysOfTheWeekDiv);
 
         const trackerContainer = document.createElement('div');
         trackerContainer.classList.add('tracker-container');
