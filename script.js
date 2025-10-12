@@ -127,8 +127,17 @@ const loadHabits = () => {
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.classList.add('module-checkbox');
-            checkbox.style.accentColor = habit.colour;
-            trackerContainer.appendChild(checkbox);
+
+            const span = document.createElement('span');
+            span.classList.add('checkmark');
+            span.style.backgroundColor = habit.color;
+
+            const checkBoxDiv = document.createElement('div');
+            checkBoxDiv.classList.add('checkbox-div');
+            checkBoxDiv.appendChild(checkbox);
+            checkBoxDiv.appendChild(span);
+
+            trackerContainer.appendChild(checkBoxDiv);
         }
 
         const habitIcon = document.createElement('div');
@@ -168,7 +177,7 @@ const createHabit = () => {
         alert('You have ran out of free habits. Upgrade to premium for more.');
         return;
     }
-    const colour = selectedColour.style.backgroundColor;
+    const color = selectedColour.style.backgroundColor;
     const icon = selectedIcon.id + '.svg';
     const now = new Date();
     const year = now.getFullYear();
@@ -179,7 +188,7 @@ const createHabit = () => {
 
     const newHabit = {
         title,
-        colour,
+        color,
         icon,
         startDayOfWeek,
         createdMonth: month,
