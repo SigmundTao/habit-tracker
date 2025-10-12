@@ -100,16 +100,27 @@
 }
 
 .empty-day-cell {
-    aspect-ratio: 1;
+    height: 20px;
+    width: 20px;
 }
 
 .module-days-holder {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    border: 1px solid pink;
+    height: 20%;
+    font-size: 0.7rem;
 }
 
 .day-of-the-week {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.module-checkbox {
+    border-radius: 50%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }

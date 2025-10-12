@@ -127,6 +127,7 @@ const loadHabits = () => {
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.classList.add('module-checkbox');
+            checkbox.style.accentColor = habit.colour;
             trackerContainer.appendChild(checkbox);
         }
 
