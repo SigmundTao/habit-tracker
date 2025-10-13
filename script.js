@@ -6,6 +6,7 @@ const habitColoursHolder = document.getElementById('habit-colours-holder');
 const habitIconsHolder = document.getElementById('habit-icons-holder');
 const submitHabitBtn = document.getElementById('submit-habit-btn');
 const habitsContainer = document.getElementById('habits-container');
+const habitTexturesHolder = document.getElementById('habit-textures-holder');
 
 const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun' ];
 
@@ -56,13 +57,23 @@ const habitColours = [
     '#9C27B0',
     '#E91E63',
     '#F48FB1',
+    '#d32f2f',
+    '#cddc39',
+    '#aea1ff',
+    '#795548',
+    '#bf360c',
+    '#d9e3f0',
+    '#f47373',
+    '#697689',
+    '#37d67a',
+    '#2ccce4',
+    '#ff8a65',
 ];
 
 habitColours.forEach(colour => {
     const div = document.createElement('div');
     div.id = colour;
     div.classList.add('habit-colour')
-    div.style.width = '2vw'
     div.style.backgroundColor = colour;
 
     div.addEventListener('click', () => {
@@ -74,7 +85,43 @@ habitColours.forEach(colour => {
     habitColoursHolder.appendChild(div)
 })
 
+const habitBackgrounds = [
+    'art-work1.jpg',
+    'art-work2.jpg',
+    'black-sand.jpg',
+    'blue-paint.jpg',
+    'brick.jpg',
+    'Denim.jpg',
+    'diagonal-lines.jpg',
+    'granite.jpg',
+    'grass.jpg',
+    'ice.jpg',
+    'marble.jpg',
+    'purple-paint.jpg',
+    'rainbow.jpg',
+    'red-paint.jpg',
+    'Wood.jpg',
+];
 
+habitBackgrounds.forEach(texture => {
+    const div = document.createElement('div');
+    div.id = texture;
+    div.style.backgroundImage = `url('./Texture-images/${texture}')`;
+    div.style.backgroundSize = 'cover';
+    div.backgroundRepeat = 'no-repeat';
+    div.style.backgroundPosition = 'center';
+    div.classList.add('habit-texture');
+
+    div.addEventListener('click', () => {
+        document.querySelectorAll('.habit-texture').forEach(t => {
+            t.classList.remove('selected-texture');
+            div.classList.add('selected-texture');
+        });
+
+        div.classList.add('selected-texture');
+    });
+    habitTexturesHolder.appendChild(div);
+})
 
 const openHabitDialog = () => {
     addHabitDialog.showModal();
@@ -99,6 +146,10 @@ const loadHabits = () => {
         const div = document.createElement('div');
         div.classList.add('habit-module');
         div.id = habit.title;
+        div.style.backgroundImage = `url('./Texture-images/${habit.background}')`;
+        div.style.backgroundSize = 'cover';
+        div.backgroundRepeat = 'no-repeat';
+        div.style.backgroundPosition = 'center';
 
         const habitModuleHeader = document.createElement('div');
         habitModuleHeader.classList.add('habit-module-header');
@@ -167,6 +218,11 @@ const loadHabits = () => {
     habits.forEach(habit => {
         const newHabit = document.createElement('div');
         newHabit.classList.add('weekly-habit');
+        newHabit.style.backgroundImage = `url('./Texture-images/${habit.background}')`;
+        newHabit.style.backgroundSize = 'cover';
+        newHabit.backgroundRepeat = 'no-repeat';
+        newHabit.style.backgroundPosition = 'center';
+
         const titleDiv = document.createElement('div');
         titleDiv.classList.add('weekly-habit-header');
 
@@ -206,9 +262,10 @@ const createHabit = () => {
     const title = habitTitleInput.value;
     const selectedColour = document.querySelector('.selected-colour');
     const selectedIcon = document.querySelector('.selected-icon');
+    const selectedTexture = document.querySelector('.selected-texture');
 
-    if (!title || !selectedColour || !selectedIcon){
-        alert('Please enter a title, select an icon and select a colour');
+    if (!title || !selectedColour || !selectedIcon || !selectedTexture){
+        alert('Please enter a title, select an icon, pick a colour and choose a background');
         return;
     }
 
@@ -218,6 +275,7 @@ const createHabit = () => {
     }
     const color = selectedColour.style.backgroundColor;
     const icon = selectedIcon.id + '.svg';
+    const background = selectedTexture.id;
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth();
@@ -229,6 +287,7 @@ const createHabit = () => {
         title,
         color,
         icon,
+        background,
         startDayOfWeek,
         createdMonth: month,
         createdYear: year
