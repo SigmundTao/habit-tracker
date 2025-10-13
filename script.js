@@ -90,6 +90,7 @@ addHabitBtn.addEventListener('click', openHabitDialog);
 // habit module creation
 const habits = []; 
 const habitModuleContainer = document.getElementById('habit-modules-container');
+const weeklyHabitsContainer = document.getElementById('weekly-habits');
 
 const loadHabits = () => {
     habitModuleContainer.innerHTML = ``;
@@ -130,7 +131,12 @@ const loadHabits = () => {
 
             const span = document.createElement('span');
             span.classList.add('checkmark');
-            span.style.backgroundColor = habit.color;
+
+            checkbox.addEventListener('change', () => {
+                if(checkbox.checked = 'checked'){
+                    span.style.backgroundColor = habit.color;
+                }
+            })
 
             const checkBoxDiv = document.createElement('div');
             checkBoxDiv.classList.add('checkbox-div');
@@ -154,12 +160,45 @@ const loadHabits = () => {
         habitModuleHeader.appendChild(habitTitle);
         
         habitModuleContainer.appendChild(div);
-    })
+    });
+
+    weeklyHabitsContainer.innerHTML = ``;
+
+    habits.forEach(habit => {
+        const newHabit = document.createElement('div');
+        newHabit.classList.add('weekly-habit');
+        const titleDiv = document.createElement('div');
+        titleDiv.classList.add('weekly-habit-header');
+
+        const titleIcon = document.createElement('div');
+        titleIcon.style.backgroundImage = `url('./svg-icons/${habit.icon}')`;
+        titleIcon.classList.add('weekly-habit-icon');
+        titleIcon.style.backgroundSize = 'contain';
+        titleIcon.style.backgroundPosition = 'center';
+        titleIcon.style.backgroundRepeat = 'no-repeat';
+        titleDiv.appendChild(titleIcon);
+
+        const titleHeading = document.createElement('p');
+        titleHeading.innerText = habit.title;
+        titleHeading.classList.add('weekly-habit-title');
+        titleDiv.appendChild(titleHeading);
+        newHabit.appendChild(titleDiv);
+
+        const checkboxHolder = document.createElement('div');
+        checkboxHolder.classList.add('weekly-checkbox-holder');
+
+        for(let i = 0; i < 7; i++){
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.style.accentColor = habit.color;
+            checkbox.classList.add('weekly-habit-checkbox');
+            checkboxHolder.appendChild(checkbox);
+        };
+        newHabit.appendChild(checkboxHolder);
+
+        weeklyHabitsContainer.appendChild(newHabit);
+    });
 }
-
-const loadHabitBtn = document.getElementById('load-habits-btn');
-
-loadHabitBtn.addEventListener('click', loadHabits);
 
 const habitTitleInput = document.getElementById('new-habit-title');
 
@@ -173,7 +212,7 @@ const createHabit = () => {
         return;
     }
 
-    if(habits.length >= 3){
+    if(habits.length >= 5){
         alert('You have ran out of free habits. Upgrade to premium for more.');
         return;
     }
