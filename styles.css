@@ -1,318 +1,38 @@
-:root {
-    --primary-color: #232323;
-    --secondary-color: #2e2e2e;
-    --border-radius: 5px;
-    --border-color: grey;
-}
-
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    color: white;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
-#header {
-    width: 100%;
-    height: 10%;
-    background-color: var(--secondary-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#habit-holder {
+  border: 1px solid black;
+  height: 50vh;
+  width: 50vw;
 }
 
-#main {
-    height: 90%;
-    width: 100%;
-    padding: 0;
-    margin: 0;display: flex;
-    background-color: var(--primary-color);
+.habit-element {
+  border: 1px solid black;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-#add-new-habit-dialog {
-    height: 70vh;
-    width: 60vw;
-    border: 1px solid black;
-    border-radius: var(--border-radius);
-    padding: 0;
-    overflow: hidden;
+.habit-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 20%;
 }
 
-#add-new-habit-div {
-    display: flex;
-    flex-direction: column;
-    height: inherit;
-    width: inherit;
-}
-
-#div2 {
-    display: flex;
-    width: 100%;
-    height: 70%;
-}
-
-#habit-info-holder {
-    border: 1px solid black;
-    width: 50%;
-}
-
-#habit-icons-holder {
-    border: 1px solid black;
-    width: 50%;
-    display: flex;
-    flex-wrap: wrap;
-    overflow-y: scroll;
-    gap: 10px;
-    padding: 7px;
-}
-
-#habit-colours-holder {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.habit-colour {
-    height: 20px;
-    aspect-ratio: 1;
-    border: 1px solid black;
-}
-
-.selected-colour {
-    border: 2px solid red;
-}
-
-.selected-icon {
-    border: 1px solid red;
-}
-
-.selected-texture {
-    border: 2px solid red;
-}
-
-.habit-texture {
-    height: 50px;
-    width: 75px;
-}
-
-#habit-textures-holder {
-    display: flex;
-    flex-wrap: wrap;
-    overflow: scroll;
-}
-
-#close-modal-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    height: 20px;
-    width: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#submit-habit-btn {
-    position: absolute;
-    bottom: 10px;
-    height: 20px;
-    width: 30%;
-    right: 50%;
-    transform: translateX(50%);
-}
-
-#habit-modules-container {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid blue;
-    height: 100%;
-    gap: 5px;
-    margin: 0;
-    flex-wrap: wrap;
-    width: 50%;
-    padding: 10px;
-}
-
-
-.habit-module {
-    width: 100%;
-    height: 18%;
-    border: 1px solid white;
-    border-radius: var(--border-radius);
-    background-color: lightcoral;
-    padding: 15px;
-    margin: 0;
-}
-
-.habit-module-icon {
-    height: 30px;
-    aspect-ratio: 1;
-}
-
-.habit-module-header {
-    display: flex;
-    width: 100%;
-    height: 20%;
-    align-items: center;
-    padding-left: 5px;
-}
-
-.habit-module-title {
-    font-weight: bold;
-    font-size: 2rem;
-}
-
-.tracker-container {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0;
-    height: 60%;
-}
-
-.empty-day-cell {
-    height: 100%;
-    width: 100%;
-}
-
-.module-days-holder {
-    display: grid;
-    width: 100%;
-    grid-template-columns: repeat(7, 1fr);
-    height: 10%;
-    margin-top: 5px;
-    font-size: 0.7rem;
-    padding: 0;
-    text-align: center;
-    place-content: center;
-}
-
-.day-of-the-week {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
-
-.checkbox-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.checkbox-div input:checked ~ .checkmark {
-    background-color: blue;
-}
-
-.checkbox-div input {
-    position: absolute;
-    opacity: 0;
-    height: 0;
-    width: 0;
-}
-
-.checkmark {
-    position: relative;
-    display: inline-block;
-    left: 0;
-    height: 50%;
-    aspect-ratio: 1;
-    border: none;
-    border-radius: 50%;
-    background-color: white;
-    border: 1px solid black;
-}
-
-.checkmark:hover {
-    background-color: lightblue;
-}
-
-/* Weekly Habit Section*/
-#weekly-habit-view {
-    border: 1px solid yellowgreen;
-    height: 50%;
-    width: 50%;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#add-habit-btn {
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    height: 50px;
-    width: 50px;
-    border-radius: var(--border-radius);
-    border: 1px solid black;
-}
-
-#add-habit-btn:hover {
-    cursor: pointer;
-}
-
-#weekly-habits-holder {
-    border: 1px solid var(--border-color);
-    width: 450px;
-    height: 80%;
-    border-radius: var(--border-radius);
-}
-
-#weekly-habits-header {
-    height: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--secondary-color);
-}
-
-#weekly-habits {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 5px;
-    padding: 10px;
-}
-
-.weekly-habit {
-    border: 1px solid var(--border-color);
-    width: 90%;
-    height: 35px;
-    border-radius: var(--border-radius);
-    display: flex;
-    padding: 5px;
-    background-color: lightcoral;
-}
-
-.weekly-habit-header {
-    width: 30%;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.weekly-habit-icon {
-    height: 100%;
-    aspect-ratio: 1;
-}
-#weekly-habit-title {}
-.weekly-checkbox-holder {
-    height: 100%;
-    display: flex;
-    width: 70%;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.weekly-habit-checkbox {
-    height: 65%;
-    aspect-ratio: 1;
+.days-holder {
+  width: 100%;
+  border: 1px solid green;
+  height: 80%;
+  display: flex;
+  flex-wrap: wrap;
 }
