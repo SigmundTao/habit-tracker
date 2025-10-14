@@ -19,9 +19,12 @@ closeHabitDialogBtn.addEventListener('click', closeHabitDialog);
 ////////////////////////////////////////////////////////
 //                 Habit Logic                       //
 //////////////////////////////////////////////////////
-const habits = [];
+
+
+const habits = JSON.parse(localStorage.getItem('habits') || '[]');
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const abbreviatedDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 //Habit Rendering
 const renderHabits = () => {
@@ -44,12 +47,32 @@ const renderHabits = () => {
     habitHeader.appendChild(habitTitle);
     habitHeader.appendChild(habitMonth);
     habitElement.appendChild(habitHeader);
+    const daysOfTheWeek = document.createElement('div');
+    daysOfTheWeek.classList.add('days-of-the-week');
+    abbreviatedDays.forEach(day => {
+      const dayDiv = document.createElement('div');
+      dayDiv.innerText = day;
+      dayDiv.classList.add('day-div');
+      daysOfTheWeek.appendChild(dayDiv);
+    })
+    habitElement.appendChild(daysOfTheWeek);
 
     const daysHolder = document.createElement('div');
-    daysHolder.classList.add('days-holder');    
+    daysHolder.classList.add('days-holder');
 
+    const startOfMonth = new Date(`${month} 1, ${year}`);
+    const firstDayOfMonth = startOfMonth.getDay();
+    if(firstDayOfMonth != 0){
+      for(let i = 0; i < firstDayOfMonth; i++){
+        const emptyDay = document.createElement('div');
+        emptyDay.classList.add('empty-day-div');
+        daysHolder.appendChild(emptyDay);
+      }
+    }
+    
   Object.entries(habit.data[year][month]).forEach(([day, isChecked]) => {
       const dayElement = document.createElement('div');
+      dayElement.classList.add('day-element');
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.classList.add('day-checkbox');
@@ -93,8 +116,11 @@ const createNewHabit = () => {
   }
 
   habits.push(habit);
+  localStorage.setItem('habits', JSON.stringify(habits));
   closeHabitDialog();
   renderHabits();
 }
 
 createHabitBtn.addEventListener('click', createNewHabit);
+
+renderHabits();
