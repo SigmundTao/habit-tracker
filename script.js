@@ -36,17 +36,27 @@ const renderHabits = () => {
 
     const habitElement = document.createElement('div');
     habitElement.classList.add('habit-element');
+    habitElement.id = habit.title;
+    habitElement.addEventListener('click', () => {
+      document.querySelectorAll('.habit-element').forEach(element => {
+        element.classList.remove('selected-habit-element');
+      })
+      habitElement.classList.add('selected-habit-element');
+    })
     const habitTitle = document.createElement('div');
     habitTitle.classList.add('habit-title');
     habitTitle.innerText = habit.title;
+
     const habitMonth = document.createElement('div');
     habitMonth.classList.add('habit-month');
     habitMonth.innerText = `${month} ${year}`
+
     const habitHeader = document.createElement('div');
     habitHeader.classList.add('habit-header');
     habitHeader.appendChild(habitTitle);
     habitHeader.appendChild(habitMonth);
     habitElement.appendChild(habitHeader);
+
     const daysOfTheWeek = document.createElement('div');
     daysOfTheWeek.classList.add('days-of-the-week');
     abbreviatedDays.forEach(day => {
@@ -61,6 +71,7 @@ const renderHabits = () => {
     daysHolder.classList.add('days-holder');
 
     const startOfMonth = new Date(`${month} 1, ${year}`);
+
     const firstDayOfMonth = startOfMonth.getDay();
     if(firstDayOfMonth != 0){
       for(let i = 0; i < firstDayOfMonth; i++){
@@ -73,12 +84,25 @@ const renderHabits = () => {
   Object.entries(habit.data[year][month]).forEach(([day, isChecked]) => {
       const dayElement = document.createElement('div');
       dayElement.classList.add('day-element');
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.classList.add('day-checkbox');
-      checkbox.checked = isChecked;
-      dayElement.appendChild(checkbox);
-      daysHolder.appendChild(dayElement);
+      dayElement.id = day;
+
+      const customCheckbox = document.createElement('span');
+      customCheckbox.classList.add('custom-checkbox');
+      if (isChecked){customCheckbox.classList.add('checked')};
+
+      dayElement.appendChild(customCheckbox);
+      daysHolder.appendChild(dayElement);+
+
+      dayElement.addEventListener('click', () => {
+        const habitIndex = habits.findIndex(h => h.title === habit.title);
+
+        if(habitIndex !== -1) {
+          const currentState  = habit.data[year][month][dayElement.id];
+          habit.data[year][month][dayElement.id] = !currentState;
+          customCheckbox.classList.toggle('checked');
+          localStorage.setItem('habits', JSON.stringify(habits));
+        }
+      });
     })
     habitElement.appendChild(daysHolder);
     habitHolder.appendChild(habitElement);
@@ -112,7 +136,8 @@ const createNewHabit = () => {
   const numberOfDaysInMonth = daysInMonth(monthIndex + 1, year);
 
   for(let i = 1; i < numberOfDaysInMonth + 1; i++){
-    habit.data[year][month][i] = false;
+    const dayID = `${month} ${i}`
+    habit.data[year][month][dayID] = false;
   }
 
   habits.push(habit);

@@ -15,13 +15,16 @@ body {
 }
 
 .habit-element {
-  border: 1px solid black;
   width: 100%;
   height: 200px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   padding: 10px;
+}
+
+.selected-habit-element {
+  border: 1px solid red;
 }
 
 .habit-header {
@@ -59,5 +62,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.custom-checkbox {
+  height: 50%;
+  aspect-ratio: 1;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
+.checked {
+  background-color: black;
 }
 
