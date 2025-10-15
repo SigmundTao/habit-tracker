@@ -4,20 +4,26 @@ const habitTitleInput = document.getElementById('habit-title-input');
 const createHabitBtn = document.getElementById('create-habit-btn');
 const habitHolder = document.getElementById('habit-holder');
 const addHabitBtn = document.getElementById('add-habit-btn');
+const editHabitDialog = document.getElementById('edit-habit-dialog');
+const editHabitTitleInput = document.getElementById('edit-habit-title');
+const closeEditDialogBtn = document.getElementById('close-edit-dialog-btn');
+const saveChangesBtn = document.getElementById('save-changes-btn');
 
 //open and close habit dialog
-const openHabitDialog = () => {
-  habitDialog.showModal();
-}
+function openDialog(element){
+  element.showModal();
+};
 
-const closeHabitDialog = () => {
-  habitDialog.close();
-}
+function closeDialog(element){
+  element.close();
+};
 
-addHabitBtn.addEventListener('click', openHabitDialog);
-closeHabitDialogBtn.addEventListener('click', closeHabitDialog);
-////////////////////////////////////////////////////////
-//                 Habit Logic                       //
+addHabitBtn.addEventListener('click', () => {openDialog(habitDialog)});
+closeHabitDialogBtn.addEventListener('click', () => {closeDialog(habitDialog)});
+closeEditDialogBtn.addEventListener('click', () => {closeDialog(editHabitDialog)});
+
+//////////////////////////////////////////////////////
+//                 Habit Logic                      //
 //////////////////////////////////////////////////////
 
 
@@ -25,6 +31,24 @@ const habits = JSON.parse(localStorage.getItem('habits') || '[]');
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const abbreviatedDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+//Edit & Save habits
+let selectedHabit;
+const editHabit = () => {
+  selectedHabit = edihabitTitleInput.value;
+}
+
+const saveHabit = (habitIndex) => {
+  habits[habitIndex].title = editHabitTitleInput.value
+}
+
+saveChangesBtn.addEventListener('click', () => {
+  const habitIndex = habits.findIndex(h => h.title === selectedHabit);
+  saveHabit(habitIndex);
+  renderHabits();
+  localStorage.setItem('habits', JSON.stringify(habits));
+  closeDialog(editHabitDialog);
+})
 
 //Habit Rendering
 const renderHabits = () => {
@@ -112,14 +136,22 @@ const renderHabits = () => {
     removeHabitBtn.innerText = 'X';
     removeHabitBtn.classList.add('remove-habit-btn');
     removeHabitBtn.addEventListener('click', () => {
-      const habitIndex = habits.findIndex(h => h.title === habitTitle);
-      habits.splice(habitIndex);
-      localStorage.setItem('habits', JSON.stringify(habits));
-      renderHabits();
+      const habitIndex = habits.findIndex(h => h.title === habit.title);
+
+      if (habitIndex !== -1){
+        habits.splice(habitIndex, 1);
+        localStorage.setItem('habits', JSON.stringify(habits));
+        renderHabits();
+      };
     })
 
     const editHabitBtn = document.createElement('button');
     editHabitBtn.innerText = 'Edit';
+    editHabitBtn.addEventListener('click', () => {
+      selectedHabit = habit.title;
+      editHabitTitleInput.value = selectedHabit;
+      editHabitDialog.showModal();
+    });
 
     habitBtnHolder.appendChild(removeHabitBtn);
     habitBtnHolder.appendChild(editHabitBtn);
@@ -164,7 +196,7 @@ const createNewHabit = () => {
 
   habits.push(habit);
   localStorage.setItem('habits', JSON.stringify(habits));
-  closeHabitDialog();
+  closeDialog(habitDialog);
   renderHabits();
 }
 
