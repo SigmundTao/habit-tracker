@@ -71,6 +71,10 @@ body {
   border-radius: 50%;
 }
 
+.custom-checkbox:hover {
+  cursor: pointer;
+}
+
 .checked {
   background-color: black;
 }

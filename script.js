@@ -103,8 +103,30 @@ const renderHabits = () => {
           localStorage.setItem('habits', JSON.stringify(habits));
         }
       });
+    });
+
+    const habitBtnHolder = document.createElement('div');
+    habitBtnHolder.classList.add('habit-btn-holder');
+
+    const removeHabitBtn = document.createElement('button');
+    removeHabitBtn.innerText = 'X';
+    removeHabitBtn.classList.add('remove-habit-btn');
+    removeHabitBtn.addEventListener('click', () => {
+      const habitIndex = habits.findIndex(h => h.title === habitTitle);
+      habits.splice(habitIndex);
+      localStorage.setItem('habits', JSON.stringify(habits));
+      renderHabits();
     })
+
+    const editHabitBtn = document.createElement('button');
+    editHabitBtn.innerText = 'Edit';
+
+    habitBtnHolder.appendChild(removeHabitBtn);
+    habitBtnHolder.appendChild(editHabitBtn);
+
     habitElement.appendChild(daysHolder);
+    habitElement.appendChild(habitBtnHolder);
+
     habitHolder.appendChild(habitElement);
     console.log(habits);
   });
