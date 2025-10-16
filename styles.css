@@ -1,3 +1,17 @@
+:root {
+  --border-radius: 10px;
+  --light-grey: #F2F2F2;
+  --secondary: #7B7B7B;
+  --blue: #007C92;
+  --green: #A4D65E;
+  --dark-grey: #333333;
+  --orange: #D94E1D;
+  --black: #1E1E1E;
+  --small-btn-radius: 5px;
+  --small-btn-height: 23px;
+  --small-btn-width: 45px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -6,25 +20,36 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--dark-grey);
 }
 
 #habit-holder {
-  border: 1px solid black;
-  height: 80vh;
-  width: 50vw;
+  min-height: 300px;
+  min-width: 500px;
   display: flex;
   flex-direction: column;
-  
+  gap: 15px;
+  padding: 15px;
+  background-color: #444444;
+  border-radius: 15px;
 }
 
 .habit-element {
   width: 100%;
+  max-width: 500px;
   height: 250px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   padding: 10px;
-  border: 1px solid black;
+  border: 1px solid var(--dark-grey);
+  border-radius: var(--border-radius);
+  background-color: var(--light-grey);
 }
 
 .selected-habit-element {
@@ -69,7 +94,7 @@ body {
 }
 
 .custom-checkbox {
-  height: 50%;
+  height: 30%;
   aspect-ratio: 1;
   border: 1px solid black;
   border-radius: 50%;
@@ -91,3 +116,166 @@ body {
   align-items: center;
 }
 
+.edit-habit-btn {
+  background-color: var(--dark-grey);
+  color: white;
+  border: 1px solid var(--secondary);
+  border-radius: var(--small-btn-radius);
+  height: var(--small-btn-height);
+  width: var(--small-btn-width);
+}
+
+.remove-habit-btn {
+  background-color: var(--dark-grey);
+  color: white;
+  border: 1px solid var(--secondary);
+  border-radius: var(--small-btn-radius);
+  height: var(--small-btn-height);
+  width: var(--small-btn-width);
+}
+
+#button-holder {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+#add-habit-btn {
+  height: var(--small-btn-height);
+  width: var(--small-btn-width);
+  border-radius: var(--small-btn-radius);
+  border: 1px solid var(--secondary);
+  background-color: var(--dark-grey);
+  color: white;  
+}
+
+#view-selector {
+  border-radius: var(--small-btn-radius);
+  border: 1px solid var(--secondary);
+  background-color: var(--dark-grey);
+  color: white;
+  height: var(--small-btn-height);
+}
+
+/* weekly habit view */
+.weekly-habit-card {
+  width: 100%;
+  max-width: 500px;
+  background-color: var(--light-grey);
+  border-radius: var(--border-radius);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.weekly-date-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-bottom: 1px solid var(--secondary);
+  padding-bottom: 10px;
+}
+
+.weekly-days-holder {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+  gap: 5px;
+}
+
+.weekly-view-day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--secondary);
+}
+
+.weekly-dates-holder {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.weekly-date-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--dark-grey);
+}
+
+.weekly-habit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: var(--small-btn-radius);
+  background-color: white;
+  gap: 10px;
+}
+
+.weekly-habit-view-title {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--dark-grey);
+}
+
+.weekly-checkbox-holder {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  flex: 2;
+}
+
+.weekly-checkbox {
+  height: 20px;
+  aspect-ratio: 1;
+  border: 1px solid var(--dark-grey);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.weekly-checkbox:hover {
+  border-color: var(--blue);
+  transform: scale(1.1);
+}
+
+.weekly-checkbox.checked {
+  background-color: var(--dark-grey);
+  border-color: var(--dark-grey);
+}
+
+.edit-weekly-habit-btn {
+  background-color: var(--dark-grey);
+  color: white;
+  border: 1px solid var(--secondary);
+  border-radius: var(--small-btn-radius);
+  height: var(--small-btn-height);
+  width: var(--small-btn-width);
+  cursor: pointer;
+}
+
+.edit-weekly-habit-btn:hover {
+  background-color: var(--secondary);
+}
+
+.remove-weekly-habit-btn {
+  background-color: var(--dark-grey);
+  color: white;
+  border: 1px solid var(--secondary);
+  border-radius: var(--small-btn-radius);
+  height: var(--small-btn-height);
+  width: var(--small-btn-width);
+  cursor: pointer;
+}
+
+.remove-weekly-habit-btn:hover {
+  background-color: var(--orange);
+  border-color: var(--orange);
+}
