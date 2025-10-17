@@ -203,7 +203,9 @@ const createNewHabit = () => {
   habits.push(habit);
   localStorage.setItem('habits', JSON.stringify(habits));
   closeDialog(habitDialog);
-  renderMonthView();
+  renderHabits(viewDropdown.value);
+
+  habitTitleInput.value = '';
 }
 
 // Render Weekly Habit View
