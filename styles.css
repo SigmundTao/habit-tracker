@@ -428,3 +428,20 @@ body {
   background-color: var(--orange);
   cursor: pointer;
 }
+
+/* menu */
+#menu-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  height: 50px;
+  aspect-ratio: 1;
+  background-image: url('./project-files/sidebar-expand.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#menu-btn:hover {
+  cursor: pointer;
+}
