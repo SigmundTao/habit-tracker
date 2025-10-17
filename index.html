@@ -10,6 +10,8 @@
   <dialog id="habit-dialog">
     <button id="close-habit-dialog-btn">X</button>
     <input id="habit-title-input">
+    <label for="habit-description" id="habit-description-label">Description</label>
+    <input id="habit-description">
     <button id="create-habit-btn">Create Habit</button>
   </dialog>
   <dialog id="edit-habit-dialog">
@@ -17,17 +19,16 @@
     <input type="text" id="edit-habit-title">
     <button id="save-changes-btn">Save</button>
   </dialog>
-    <div id="habit-holder"></div>
-    <div id="button-holder">
-      <button id="add-habit-btn">+</button>
-      <select id="view-selector">
-        <option>Week</option>
-        <option>Month</option>
-        <option>Year</option>
-      </select>
-    </div>
-    <div id="menu-btn"></div>
-
+      <div id="menu-btn"></div>
+      <div id="habit-holder"></div>
+      <div id="button-holder">
+        <button id="add-habit-btn">+</button>
+        <select id="view-selector">
+          <option>Week</option>
+          <option>Month</option>
+          <option>Year</option>
+        </select>
+      </div>
   <script src="script.js">
 
   </script>

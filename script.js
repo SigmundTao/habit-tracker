@@ -10,7 +10,6 @@ const closeEditDialogBtn = document.getElementById('close-edit-dialog-btn');
 const saveChangesBtn = document.getElementById('save-changes-btn');
 const viewDropdown = document.getElementById('view-selector');
 
-
 //open and close habit dialog
 function openDialog(element){
   element.showModal();
@@ -158,7 +157,12 @@ const renderMonthView = () => {
       editHabitDialog.showModal();
     });
 
+    const streakDisplay = document.createElement('div');
+    streakDisplay.classList.add('month-view-streak-display');
+    streakDisplay.innerText = `7`;
+
     habitBtnHolder.appendChild(removeHabitBtn);
+    habitBtnHolder.appendChild(streakDisplay);
     habitBtnHolder.appendChild(editHabitBtn);
 
     habitElement.appendChild(daysHolder);
@@ -206,7 +210,9 @@ const createNewHabit = () => {
   renderHabits(viewDropdown.value);
 
   habitTitleInput.value = '';
-}
+};
+
+createHabitBtn.addEventListener('click', createNewHabit);
 
 // Render Weekly Habit View
 const renderWeekView = () => {
@@ -435,6 +441,14 @@ const renderHabits = (view) => {
   }
 }
 
-createHabitBtn.addEventListener('click', createNewHabit);
+/* Streak functionality */
+const getStreak = () => {
+  const now = new Date();
+  const month = now.getMonth();
+  const monthName = months(month);
+  const day = now.getDate();
+
+  habits.forEach()
+};
 
 renderHabits(viewDropdown.value);
