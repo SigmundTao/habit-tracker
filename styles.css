@@ -98,10 +98,13 @@ body {
   aspect-ratio: 1;
   border: 1px solid black;
   border-radius: 50%;
+  transition: 0.2s ease-in-out;
 }
 
 .custom-checkbox:hover {
   cursor: pointer;
+  transform: scale(1.5);
+  border: 1px solid var(--blue);
 }
 
 .checked {
@@ -117,21 +120,25 @@ body {
 }
 
 .edit-habit-btn {
-  background-color: var(--dark-grey);
-  color: white;
   border: 1px solid var(--secondary);
   border-radius: var(--small-btn-radius);
   height: var(--small-btn-height);
   width: var(--small-btn-width);
 }
 
+.edit-habit-btn:hover {
+  background-color: var(--orange);
+}
+
 .remove-habit-btn {
-  background-color: var(--dark-grey);
-  color: white;
   border: 1px solid var(--secondary);
   border-radius: var(--small-btn-radius);
   height: var(--small-btn-height);
   width: var(--small-btn-width);
+}
+
+.remove-habit-btn:hover {
+  background-color: var(--orange);
 }
 
 #button-holder {
@@ -278,4 +285,66 @@ body {
 .remove-weekly-habit-btn:hover {
   background-color: var(--orange);
   border-color: var(--orange);
+}
+
+/* Yearly Habit Styling */
+.year-card {
+  border: 1px solid black;
+  width: 100%;
+  min-height: 800px;
+  background-color: var(--light-grey);
+  border-radius: var(--border-radius);
+  padding: 10px;
+}
+
+.year-view-header {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+}
+
+.yearly-habit-select {
+  border-radius: var(--small-btn-radius);
+  border: 1px solid var(--secondary);
+  height: 25px;
+}
+
+.year-title {
+
+}
+
+.yearly-habit-option {
+
+}
+
+.months-holder {
+  height: 70%;
+  border: 1px solid orangered;
+}
+
+.month-card {
+
+}
+
+.month-title {
+
+}
+
+.year-view-monthly-days-holder {
+  height: 100px;
+  display: flex;
+  border: 1px solid black;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.year-view-day-checkbox {
+  width: 10%;
+  aspect-ratio: 1;
+  border: 1px solid black;
+  background-color: var(--dark-grey);
+}
+
+.year-checked {
+  background-color: #007C92;
 }

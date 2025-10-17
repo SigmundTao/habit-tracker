@@ -49,7 +49,7 @@ const saveHabit = (habitIndex) => {
 saveChangesBtn.addEventListener('click', () => {
   const habitIndex = habits.findIndex(h => h.title === selectedHabit);
   saveHabit(habitIndex);
-  renderMonthView();
+  renderHabits(viewDropdown.value);
   localStorage.setItem('habits', JSON.stringify(habits));
   closeDialog(editHabitDialog);
 })
@@ -216,7 +216,6 @@ const renderWeekView = () => {
   const now = new Date();
   const year = now.getFullYear();
   
-  // Calculate the start of the current week (Sunday)
   const startOfWeek = new Date(now);
   startOfWeek.setDate(now.getDate() - now.getDay());
   startOfWeek.setHours(0, 0, 0, 0);
@@ -340,14 +339,100 @@ const renderWeekView = () => {
   habitHolder.appendChild(weeklyHabitCard);
 };
 
+// Render Yearly Habit View
+const renderYearView = () => {
+  habitHolder.innerHTML = ``;
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const yearCard = document.createElement('div');
+  yearCard.classList.add('year-card');
+
+  const yearTitle = document.createElement('div');
+  yearTitle.classList.add('year-title');
+  yearTitle.innerText = year;
+
+  const habitSelect = document.createElement('select');
+  habitSelect.classList.add('yearly-habit-select');
+  habits.forEach(habit => {
+    const option = document.createElement('option');
+    option.classList.add('yearly-habit-option');
+    option.id = habit.title;
+    option.innerText = habit.title;
+    habitSelect.appendChild(option);
+  });
+
+  const monthsHolder = document.createElement('div');
+  monthsHolder.classList.add('months-holder');
+
+  habitSelect.addEventListener('change', () => renderYearHabit(habitSelect.value, year, monthsHolder));
+
+  const header = document.createElement('div');
+  header.classList.add('year-view-header');
+  header.appendChild(habitSelect);
+  header.appendChild(yearTitle);
+
+  yearCard.appendChild(header);
+  yearCard.appendChild(monthsHolder);
+  habitHolder.appendChild(yearCard);
+
+  renderYearHabit(habitSelect.value, year, monthsHolder);
+};
+
+const renderYearHabit = (habitTitle, year, monthsHolder) => {
+  monthsHolder.innerHTML = '';
+
+  const habitIndex = habits.findIndex(h => h.title === habitTitle);
+
+  Object.keys(habits[habitIndex].data[year]).forEach((month) => {
+    const monthCard = document.createElement('div');
+    monthCard.classList.add('month-card');
+
+    const monthTitle = document.createElement('div');
+    monthTitle.classList.add('month-title');
+    monthTitle.innerText = month;
+
+    const daysHolder = document.createElement('div');
+    daysHolder.classList.add('year-view-monthly-days-holder');
+    
+    monthCard.appendChild(monthTitle);
+    monthCard.appendChild(daysHolder);
+
+    Object.entries(habits[habitIndex].data[year][month]).forEach(([day, isChecked]) => {
+      const dayCheckbox = document.createElement('span');
+      dayCheckbox.classList.add('year-view-day-checkbox');
+      dayCheckbox.id = day;
+      if(isChecked){
+        dayCheckbox.classList.add('year-checked');
+      };
+
+      daysHolder.appendChild(dayCheckbox);
+    })
+
+    monthsHolder.appendChild(monthCard);
+  });
+};
+
 viewDropdown.addEventListener('change', () => {
   if(viewDropdown.value === 'Month'){
     renderMonthView();
   } else if(viewDropdown.value === 'Week'){
     renderWeekView();
-  };
+  } else if(viewDropdown.value === 'Year'){
+    renderYearView();
+  }
 });
+
+const renderHabits = (view) => {
+  if(view === 'Month'){
+    renderMonthView();
+  } else if(view === 'Week'){
+    renderWeekView();
+  } else if(view === 'Year'){
+    renderYearView();
+  }
+}
 
 createHabitBtn.addEventListener('click', createNewHabit);
 
-renderMonthView();
+renderHabits(viewDropdown.value);
