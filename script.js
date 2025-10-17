@@ -27,13 +27,10 @@ closeEditDialogBtn.addEventListener('click', () => {closeDialog(editHabitDialog)
 //                 Habit Logic                      //
 //////////////////////////////////////////////////////
 
-
 const habits = JSON.parse(localStorage.getItem('habits') || '[]');
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const abbreviatedDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-
 
 //Edit & Save habits
 let selectedHabit;
@@ -108,7 +105,7 @@ const renderMonthView = () => {
       }
     }
     
-  Object.entries(habit.data[year][month]).forEach(([day, isChecked]) => {
+    Object.entries(habit.data[year][month]).forEach(([day, isChecked]) => {
       const dayElement = document.createElement('div');
       dayElement.classList.add('day-element');
       dayElement.id = day;
@@ -118,16 +115,26 @@ const renderMonthView = () => {
       if (isChecked){customCheckbox.classList.add('checked')};
 
       dayElement.appendChild(customCheckbox);
-      daysHolder.appendChild(dayElement);+
+      daysHolder.appendChild(dayElement);
 
       customCheckbox.addEventListener('click', () => {
         const habitIndex = habits.findIndex(h => h.title === habit.title);
 
         if(habitIndex !== -1) {
-          const currentState  = habit.data[year][month][dayElement.id];
-          habit.data[year][month][dayElement.id] = !currentState;
+          const currentState = habit.data[year][month][dayElement.id];
+          const newState = !currentState;
+          
+          // Update the data
+          habit.data[year][month][dayElement.id] = newState;
           customCheckbox.classList.toggle('checked');
+          
+          if(newState === true) {
+            const clickedDate = new Date(dayElement.id);
+            completedHabit(habits[habitIndex], clickedDate);
+          }
+          
           localStorage.setItem('habits', JSON.stringify(habits));
+          renderMonthView();
         }
       });
     });
@@ -157,12 +164,16 @@ const renderMonthView = () => {
       editHabitDialog.showModal();
     });
 
+    // Streak display for month view
+    const streakContainer = document.createElement('div');
+    streakContainer.classList.add('month-view-streak-container');
     const streakDisplay = document.createElement('div');
     streakDisplay.classList.add('month-view-streak-display');
-    streakDisplay.innerText = `7`;
+    streakDisplay.innerText = habit.streak || 0;
+    streakContainer.appendChild(streakDisplay);
 
     habitBtnHolder.appendChild(removeHabitBtn);
-    habitBtnHolder.appendChild(streakDisplay);
+    habitBtnHolder.appendChild(streakContainer);
     habitBtnHolder.appendChild(editHabitBtn);
 
     habitElement.appendChild(daysHolder);
@@ -171,13 +182,11 @@ const renderMonthView = () => {
     habitHolder.appendChild(habitElement);
     console.log(habits);
   });
-
 };
 
 //Habit Creation
-
 function daysInMonth(month, year){
-  return new  Date(year, month, 0).getDate();
+  return new Date(year, month, 0).getDate();
 };
 
 const createNewHabit = () => {
@@ -189,13 +198,14 @@ const createNewHabit = () => {
 
   const habit = {
     title : habitTitle,
+    streak : 0,
+    lastCompletedDate: null,
     data : {
       [year] : {
         [month] : {}
-
-        },
       },
-    };
+    },
+  };
 
   const numberOfDaysInMonth = daysInMonth(monthIndex + 1, year);
 
@@ -305,14 +315,29 @@ const renderWeekView = () => {
           }
           
           const currentState = habits[habitIndex].data[yearNum][monthName][dayID];
-          habits[habitIndex].data[yearNum][monthName][dayID] = !currentState;
+          const newState = !currentState;
+          habits[habitIndex].data[yearNum][monthName][dayID] = newState;
           weeklyCheckbox.classList.toggle('checked');
+          
+          if(newState === true) {
+            completedHabit(habits[habitIndex], date);
+          }
+          
           localStorage.setItem('habits', JSON.stringify(habits));
+          renderWeekView();
         }
       });
 
       weeklyCheckboxHolder.appendChild(weeklyCheckbox);
     })
+
+    // Streak display for week view
+    const streakContainer = document.createElement('div');
+    streakContainer.classList.add('weekly-streak-container');
+    const streakDisplay = document.createElement('div');
+    streakDisplay.classList.add('weekly-streak-display');
+    streakDisplay.innerText = habit.streak || 0;
+    streakContainer.appendChild(streakDisplay);
 
     const editWeeklyHabitBtn = document.createElement('button');
     editWeeklyHabitBtn.classList.add('edit-weekly-habit-btn');
@@ -338,6 +363,7 @@ const renderWeekView = () => {
 
     habitDiv.appendChild(habitTitle);
     habitDiv.appendChild(weeklyCheckboxHolder);
+    habitDiv.appendChild(streakContainer);
     habitDiv.appendChild(editWeeklyHabitBtn);
     habitDiv.appendChild(removeWeeklyHabitBtn);
 
@@ -375,9 +401,19 @@ const renderYearView = () => {
 
   habitSelect.addEventListener('change', () => renderYearHabit(habitSelect.value, year, monthsHolder));
 
+  // Streak display for year view
+  const streakContainer = document.createElement('div');
+  streakContainer.classList.add('year-view-streak-container');
+  const streakDisplay = document.createElement('div');
+  streakDisplay.classList.add('year-view-streak-display');
+  const currentHabit = habits.find(h => h.title === habitSelect.value);
+  streakDisplay.innerText = currentHabit ? (currentHabit.streak || 0) : 0;
+  streakContainer.appendChild(streakDisplay);
+
   const header = document.createElement('div');
   header.classList.add('year-view-header');
   header.appendChild(habitSelect);
+  header.appendChild(streakContainer);
   header.appendChild(yearTitle);
 
   yearCard.appendChild(header);
@@ -391,6 +427,12 @@ const renderYearHabit = (habitTitle, year, monthsHolder) => {
   monthsHolder.innerHTML = '';
 
   const habitIndex = habits.findIndex(h => h.title === habitTitle);
+
+  // Update streak display in year view
+  const streakDisplay = document.querySelector('.year-view-streak-display');
+  if(streakDisplay) {
+    streakDisplay.innerText = habits[habitIndex].streak || 0;
+  }
 
   Object.keys(habits[habitIndex].data[year]).forEach((month) => {
     const monthCard = document.createElement('div');
@@ -442,13 +484,48 @@ const renderHabits = (view) => {
 }
 
 /* Streak functionality */
-const getStreak = () => {
-  const now = new Date();
-  const month = now.getMonth();
-  const monthName = months(month);
-  const day = now.getDate();
+const completedHabit = (habit, date) => {
+  const year = date.getFullYear();
+  const monthName = months[date.getMonth()];
+  const day = date.getDate();
+  const dayID = `${monthName} ${day}`;
 
-  habits.forEach()
+  habit.data[year][monthName][dayID] = true;
+
+  const today = new Date().toDateString();
+  const lastCompleted = habit.lastCompletedDate ? new Date(habit.lastCompletedDate).toDateString() : null;
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayString = yesterday.toDateString();
+
+  if(lastCompleted === yesterdayString){
+    habit.streak++;
+  } else if(lastCompleted === today){
+  
+  } else {
+    habit.streak = 1;
+  }
+  
+  habit.lastCompletedDate = today;
 };
+
+const checkStreaksOnLoad = () => {
+  const today = new Date().toDateString();
+
+  habits.forEach(habit => {
+    const lastCompleted = habit.lastCompletedDate ? new Date(habit.lastCompletedDate).toDateString() : null;
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayString = yesterday.toDateString();
+
+    if (lastCompleted !== yesterdayString && lastCompleted !== today){
+      habit.streak = 0;
+    }
+  });
+
+  localStorage.setItem('habits', JSON.stringify(habits));
+};
+
+window.addEventListener('DOMContentLoaded', checkStreaksOnLoad);
 
 renderHabits(viewDropdown.value);
