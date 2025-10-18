@@ -10,6 +10,7 @@ const closeEditDialogBtn = document.getElementById('close-edit-dialog-btn');
 const saveChangesBtn = document.getElementById('save-changes-btn');
 const viewDropdown = document.getElementById('view-selector');
 
+
 //open and close habit dialog
 function openDialog(element){
   element.showModal();
@@ -170,7 +171,17 @@ const renderMonthView = () => {
     const streakDisplay = document.createElement('div');
     streakDisplay.classList.add('month-view-streak-display');
     streakDisplay.innerText = habit.streak || 0;
+
     streakContainer.appendChild(streakDisplay);
+
+    if(habit.streak >= 1){
+      const flame = document.createElement('div');
+      flame.classList.add('streak-flame');
+      flame.style.backgroundImage = `url('./fire.png')`;
+      flame.style.backgroundPosition = 'center';
+      flame.style.backgroundSize = 'contain';
+      streakContainer.appendChild(flame);
+    };
 
     habitBtnHolder.appendChild(removeHabitBtn);
     habitBtnHolder.appendChild(streakContainer);
@@ -288,7 +299,7 @@ const renderWeekView = () => {
       const monthName = months[date.getMonth()];
       const yearNum = date.getFullYear();
       const dayID = `${monthName} ${dayNum}`;
-      
+
       const weeklyCheckbox = document.createElement('span');
       weeklyCheckbox.classList.add('weekly-checkbox');
       weeklyCheckbox.dataset.day = dayID;
@@ -339,9 +350,18 @@ const renderWeekView = () => {
     streakDisplay.innerText = habit.streak || 0;
     streakContainer.appendChild(streakDisplay);
 
+    if(habit.streak >= 1){
+      const flame = document.createElement('div');
+      flame.classList.add('streak-flame');
+      flame.style.backgroundImage = `url('./fire.png')`;
+      flame.style.backgroundPosition = 'center';
+      flame.style.backgroundSize = 'contain';
+      streakContainer.appendChild(flame);
+    };
+
     const editWeeklyHabitBtn = document.createElement('button');
     editWeeklyHabitBtn.classList.add('edit-weekly-habit-btn');
-    editWeeklyHabitBtn.innerText = 'Edit';
+    editWeeklyHabitBtn.innerText = '?';
     editWeeklyHabitBtn.addEventListener('click', () => {
       selectedHabit = habit.title;
       editHabitTitleInput.value = selectedHabit;
@@ -361,11 +381,17 @@ const renderWeekView = () => {
       }
     })
 
+    const buttonHolder = document.createElement('div');
+    buttonHolder.classList.add('weekly-btn-holder');
+
+    buttonHolder.appendChild(streakContainer);
+    buttonHolder.appendChild(editWeeklyHabitBtn);
+    buttonHolder.appendChild(removeWeeklyHabitBtn);
+
     habitDiv.appendChild(habitTitle);
     habitDiv.appendChild(weeklyCheckboxHolder);
-    habitDiv.appendChild(streakContainer);
-    habitDiv.appendChild(editWeeklyHabitBtn);
-    habitDiv.appendChild(removeWeeklyHabitBtn);
+    habitDiv.appendChild(buttonHolder);
+    
 
     weeklyHabitCard.appendChild(habitDiv);
   })
@@ -409,6 +435,15 @@ const renderYearView = () => {
   const currentHabit = habits.find(h => h.title === habitSelect.value);
   streakDisplay.innerText = currentHabit ? (currentHabit.streak || 0) : 0;
   streakContainer.appendChild(streakDisplay);
+
+  if(currentHabit.streak >= 1){
+      const flame = document.createElement('div');
+      flame.classList.add('streak-flame');
+      flame.style.backgroundImage = `url('./fire.png')`;
+      flame.style.backgroundPosition = 'center';
+      flame.style.backgroundSize = 'contain';
+      streakContainer.appendChild(flame);
+    };
 
   const header = document.createElement('div');
   header.classList.add('year-view-header');

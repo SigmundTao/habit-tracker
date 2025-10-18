@@ -30,6 +30,7 @@ body {
   background-color: var(--dark-grey);
   padding: 0;
   margin: 0;
+  font-family: monospace;
 }
 
 #main-container {
@@ -55,6 +56,7 @@ body {
   background-color: var(--primary);
   border-radius: 15px;
   overflow-y: scroll;
+  box-shadow: 9px 19px 61px -3px rgba(0,0,0,0.75);
 }
 
 .habit-element {
@@ -67,13 +69,20 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   padding: 10px;
-  border: 1px solid var(--dark-grey);
+  border: 3px solid var(--dark-grey);
   border-radius: var(--border-radius);
   background-color: var(--light-grey);
 }
 
+.habit-element:hover {
+  cursor: pointer;
+  border: 3px solid var(--blue);
+  transition: 0.2s ease-in-out;
+  box-shadow: 9px 19px 61px -3px rgba(0,0,0,0.75);
+}
+
 .selected-habit-element {
-  border: 1px solid red;
+  border: 3px solid var(--orange);
 }
 
 .habit-header {
@@ -256,7 +265,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 10px;
+  padding: 5px 5px;
   border-radius: var(--small-btn-radius);
   background-color: white;
   gap: 10px;
@@ -266,6 +275,7 @@ body {
   flex: 1;
   font-size: 0.9rem;
   color: var(--dark-grey);
+  width: 25%;
 }
 
 .weekly-checkbox-holder {
@@ -273,6 +283,8 @@ body {
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
   flex: 2;
+  height: 100%;
+  width: 50%;
 }
 
 .weekly-checkbox {
@@ -299,8 +311,8 @@ body {
   color: white;
   border: 1px solid var(--secondary);
   border-radius: var(--small-btn-radius);
-  height: var(--small-btn-height);
-  width: var(--small-btn-width);
+  height: 25px;
+  width: 25px;
   cursor: pointer;
 }
 
@@ -314,8 +326,8 @@ body {
   color: white;
   border: 1px solid var(--secondary);
   border-radius: var(--small-btn-radius);
-  height: var(--small-btn-height);
-  width: var(--small-btn-width);
+  height: 25px;
+  width: 25px;
   cursor: pointer;
 }
 
@@ -326,12 +338,18 @@ body {
 
 /* Yearly Habit Styling */
 .year-card {
-  border: 1px solid black;
+  border: 1px solid var(--light-grey);
   width: 100%;
-  min-height: 800px;
-  background-color: var(--light-grey);
+  min-height: 700px;
+  background-color: var(--secondary);
   border-radius: var(--border-radius);
   padding: 10px;
+  box-shadow: 9px 19px 61px -3px rgba(0,0,0,0.75);
+}
+
+.year-card:hover {
+  border: 3px solid var(--blue);
+  transition: 1s ease-out;
 }
 
 .year-view-header {
@@ -342,8 +360,14 @@ body {
 
 .yearly-habit-select {
   border-radius: var(--small-btn-radius);
-  border: 1px solid var(--secondary);
+  border: 1px solid var(--light-grey);
   height: 25px;
+  background-color: var(--secondary);
+}
+
+.yearly-habit-select:hover {
+  cursor: pointer;
+  background-color: var(--orange);
 }
 
 .year-title {
@@ -355,32 +379,41 @@ body {
 }
 
 .months-holder {
-  height: 70%;
-  border: 1px solid orangered;
+  border: 10%;
+  height: 700px;
 }
 
 .month-card {
-  border: 1px solid black;
-  height: 150px;
+  height: 130px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
 }
 
 .month-title {
-
+  font-size: 1.5rem;
 }
 
 .year-view-monthly-days-holder {
-  height: 50px;
+  height: 80%;
   width: 50%;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   gap: 1px;
-  border: 1px solid green;
 }
 
 .year-view-day-checkbox {
   width: 100%;
+  aspect-ratio: 1;
   border: 1px solid black;
-  background-color: var(--dark-orange);
+  background-color: var(--dark-grey);
+}
+
+.year-view-day-checkbox:hover {
+  transform: scale(1.2);
+  border: 1px solid var(--blue);
+  transition: ease-in-out 0.5s;
 }
 
 .year-checked {
@@ -440,4 +473,70 @@ body {
 #create-habit-btn:hover {
   background-color: var(--orange);
   cursor: pointer;
+}
+
+/* flame styling */
+.month-view-streak-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.streak-flame {
+  height: 75%;
+  aspect-ratio: 1;
+}
+
+.weekly-streak-container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  justify-content: center;
+}
+
+.weekly-btn-holder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 25%;
+  height: 100%;
+}
+
+.year-view-streak-container {
+  display: flex;
+  flex-direction: row;
+  height: 25px;
+  width: 50px;
+  gap: 3px;
+  justify-content: center;
+  align-items: center;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+/* notice styling */
+#notice {
+  height: 100px;
+  border: 1px solid black;
+  width: 250px;
+  display: flex;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background-color: var(--primary);
+  border-radius: var(--border-radius);
+  border: none;
+  font-size: 0.4rem;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+  color: var(--secondary);
+}
+
+#notice button {
+  position: absolute;
+  top: 5px;
+  left: 5px;
 }
