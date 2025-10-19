@@ -228,12 +228,14 @@ body {
   width: 100%;
   border-bottom: 1px solid var(--secondary);
   padding-bottom: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
 .weekly-days-holder {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  width: 100%;
+  width: 50%;
   gap: 5px;
 }
 
@@ -248,7 +250,7 @@ body {
 .weekly-dates-holder {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  width: 100%;
+  width: 50%;
   gap: 5px;
   margin-top: 5px;
 }
@@ -345,11 +347,7 @@ body {
   border-radius: var(--border-radius);
   padding: 10px;
   box-shadow: 9px 19px 61px -3px rgba(0,0,0,0.75);
-}
-
-.year-card:hover {
-  border: 3px solid var(--blue);
-  transition: 1s ease-out;
+  position: relative;
 }
 
 .year-view-header {
@@ -363,6 +361,7 @@ body {
   border: 1px solid var(--light-grey);
   height: 25px;
   background-color: var(--secondary);
+  color: white;
 }
 
 .yearly-habit-select:hover {
@@ -371,7 +370,7 @@ body {
 }
 
 .year-title {
-
+  font-size: 1.5rem;
 }
 
 .yearly-habit-option {
@@ -422,21 +421,12 @@ body {
 
 /* Dialog Styling */
 #habit-dialog {
-  height: 50vh;
-  width: 500px;
   border: none;
   border-radius: var(--border-radius);
   background-color: var(--primary);
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
 }
 
 #close-habit-dialog-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
   background-color: var(--primary);
   border: 1px solid var(--secondary);
   height: var(--small-btn-height);
@@ -451,15 +441,12 @@ body {
 }
 
 #habit-title-input {
-  height: 100px;
-  width: 300px;
+  height: 50px;
   background-color: var(--dark-grey);
   border: none;
   color: white;
   padding-left: 10px;
-  font-size: 2rem;
-  display: flex;
-  align-items: baseline;
+  border-radius: var(--border-radius);
 }
 
 #create-habit-btn {
@@ -471,8 +458,43 @@ body {
 }
 
 #create-habit-btn:hover {
-  background-color: var(--orange);
+  background-color: var(--blue);
   cursor: pointer;
+}
+
+#edit-habit-dialog {
+  background-color: var(--primary);
+  border: none;
+  border-radius: var(--border-radius);
+}
+
+#edit-habit-dialog input {
+  background-color: var(--dark-grey);
+  color: white;
+  border: none;
+  height: 50px;
+  border-radius: var(--border-radius);
+}
+
+#edit-habit-dialog button {
+  background-color: var(--dark-grey);
+  border: 1px solid var(--secondary);
+  border-radius: var(--small-btn-radius);
+  height: var(--small-btn-height);
+  width: var(--small-btn-width);
+  color: white;
+}
+
+#edit-habit-dialog button:hover {
+  cursor: pointer;
+}
+
+#save-changes-btn:hover {
+  background-color: var(--blue);
+}
+
+#close-edit-dialog-btn:hover {
+  background-color: var(--orange);
 }
 
 /* flame styling */
@@ -513,6 +535,10 @@ body {
   align-items: center;
   font-size: x-large;
   font-weight: bold;
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* notice styling */

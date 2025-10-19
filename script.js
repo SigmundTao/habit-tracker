@@ -67,7 +67,7 @@ const renderMonthView = () => {
         element.classList.remove('selected-habit-element');
       })
       habitElement.classList.add('selected-habit-element');
-    })
+    });
     const habitTitle = document.createElement('div');
     habitTitle.classList.add('habit-title');
     habitTitle.innerText = habit.title;
@@ -433,17 +433,9 @@ const renderYearView = () => {
   const streakDisplay = document.createElement('div');
   streakDisplay.classList.add('year-view-streak-display');
   const currentHabit = habits.find(h => h.title === habitSelect.value);
-  streakDisplay.innerText = currentHabit ? (currentHabit.streak || 0) : 0;
+  streakDisplay.innerText = currentHabit.streak;
   streakContainer.appendChild(streakDisplay);
 
-  if(currentHabit.streak >= 1){
-      const flame = document.createElement('div');
-      flame.classList.add('streak-flame');
-      flame.style.backgroundImage = `url('./fire.png')`;
-      flame.style.backgroundPosition = 'center';
-      flame.style.backgroundSize = 'contain';
-      streakContainer.appendChild(flame);
-    };
 
   const header = document.createElement('div');
   header.classList.add('year-view-header');
@@ -459,15 +451,28 @@ const renderYearView = () => {
 };
 
 const renderYearHabit = (habitTitle, year, monthsHolder) => {
+  const streakDisplay = document.querySelector('.year-view-streak-display');
+  const streakContainer = document.querySelector('.year-view-streak-container');
+
   monthsHolder.innerHTML = '';
+  streakContainer.innerHTML = '';
 
   const habitIndex = habits.findIndex(h => h.title === habitTitle);
 
-  // Update streak display in year view
-  const streakDisplay = document.querySelector('.year-view-streak-display');
-  if(streakDisplay) {
-    streakDisplay.innerText = habits[habitIndex].streak || 0;
-  }
+  if(habits[habitIndex].streak >= 1){
+      streakDisplay.innerText = habits[habitIndex].streak;
+      const flame = document.createElement('div');
+      flame.classList.add('streak-flame');
+      flame.style.backgroundImage = `url('./fire.png')`;
+      flame.style.backgroundPosition = 'center';
+      flame.style.backgroundSize = 'contain';
+
+      streakContainer.appendChild(streakDisplay);
+      streakContainer.appendChild(flame);
+    } else {
+      streakDisplay.innerText = habits[habitIndex].streak;
+      streakContainer.appendChild(streakDisplay);
+    }
 
   Object.keys(habits[habitIndex].data[year]).forEach((month) => {
     const monthCard = document.createElement('div');
