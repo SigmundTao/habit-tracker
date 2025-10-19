@@ -2,6 +2,7 @@
 
 A minimalist habit tracking application built with vanilla JavaScript. Track your daily habits with streaks, multiple views, and persistent data storage.
 ---
+[Live Demo](https://habit-tracker-beta-eight.vercel.app/)
 
 ## Features
 
