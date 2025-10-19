@@ -12,6 +12,8 @@
   --small-btn-radius: 5px;
   --small-btn-height: 23px;
   --small-btn-width: 45px;
+  --font-family: "Sofia Sans Condensed", sans-serif;
+
 }
 
 * {
@@ -30,7 +32,7 @@ body {
   background-color: var(--dark-grey);
   padding: 0;
   margin: 0;
-  font-family: monospace;
+  font-family: var(--font-family);
 }
 
 #main-container {
@@ -90,7 +92,16 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 95%;
-  height: 10%;
+  height: 20%;
+}
+
+.habit-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.habit-month {
+  font-weight: bold;
 }
 
 .days-of-the-week {
@@ -106,12 +117,13 @@ body {
   height: 100%;
   display: flex;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .days-holder {
   width: 100%;
-  height: 70%;
+  height: 55%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 }
@@ -123,7 +135,7 @@ body {
 }
 
 .custom-checkbox {
-  height: 30%;
+  height: 50%;
   aspect-ratio: 1;
   border: 1px solid black;
   border-radius: 50%;
@@ -137,11 +149,11 @@ body {
 }
 
 .checked {
-  background-color: black;
+  background-color: var(--orange);
 }
 
 .habit-btn-holder {
-  height: 10%;
+  height: 15%;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -153,8 +165,8 @@ body {
   border-radius: var(--small-btn-radius);
   height: var(--small-btn-height);
   width: var(--small-btn-width);
-  color: white;
-  background-color: var(--dark-grey);
+  color: black;
+  background-color: var(--light-grey);
 }
 
 .edit-habit-btn:hover {
@@ -167,8 +179,8 @@ body {
   border-radius: var(--small-btn-radius);
   height: var(--small-btn-height);
   width: var(--small-btn-width);
-  background-color: var(--dark-grey);
-  color: white;
+  background-color: var(--light-grey);
+  color: black;
 }
 
 .remove-habit-btn:hover {
@@ -190,6 +202,12 @@ body {
   border: 1px solid var(--secondary);
   background-color: var(--dark-grey);
   color: white;  
+  font-family: var(--font-family);
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
 
 #add-habit-btn:hover {
@@ -502,6 +520,7 @@ body {
   display: flex;
   flex-direction: row;
   height: 100%;
+  font-size: 1.5rem;
 }
 
 .streak-flame {
